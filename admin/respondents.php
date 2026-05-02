@@ -24,15 +24,16 @@ $respondents = $pdo->query("SELECT * FROM respondents ORDER BY id ASC")->fetchAl
 $criteria = $pdo->query("SELECT * FROM criteria ORDER BY code ASC")->fetchAll();
 ?>
 
-<div class="mb-8 flex justify-between items-center">
+<div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
     <div>
-        <h1 class="text-2xl font-bold text-gray-800">Manajemen Responden</h1>
-        <p class="text-gray-500">Daftar pakar dan matriks perbandingan individu (Total: <?php echo count($respondents); ?> Responden)</p>
+        <h1 class="text-xl md:text-2xl font-bold text-gray-800">Manajemen Responden (Multi-Expert)</h1>
+        <p class="text-sm text-gray-500">Kelola penilaian dari 15 pakar untuk pembobotan kriteria</p>
     </div>
-    
-    <button onclick="document.getElementById('addModal').classList.remove('hidden')" class="bg-indigo-600 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200">
-        <i class="fas fa-plus mr-2"></i> Tambah Responden
-    </button>
+    <div class="flex space-x-3 w-full md:w-auto">
+        <button onclick="document.getElementById('addModal').classList.remove('hidden')" class="flex-1 md:flex-none bg-indigo-600 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-xl font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200 text-xs md:text-sm">
+            <i class="fas fa-plus mr-2"></i> Tambah Pakar
+        </button>
+    </div>
 </div>
 
 <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6">
@@ -122,12 +123,12 @@ $criteria = $pdo->query("SELECT * FROM criteria ORDER BY code ASC")->fetchAll();
     <?php endforeach; ?>
 </div>
 
-<div class="mt-12 bg-indigo-900 rounded-[2rem] p-10 text-white flex flex-col md:flex-row justify-between items-center shadow-2xl relative overflow-hidden">
-    <div class="relative z-10">
-        <h3 class="text-2xl font-bold mb-2">Proses Agregasi Akhir</h3>
-        <p class="text-indigo-200">Klik tombol di samping untuk menggabungkan seluruh data responden menggunakan rumus GEOMEAN.</p>
+<div class="mt-12 bg-indigo-900 rounded-[2rem] p-6 md:p-10 text-white flex flex-col md:flex-row justify-between items-center shadow-2xl relative overflow-hidden">
+    <div class="relative z-10 text-center md:text-left">
+        <h3 class="text-xl md:text-2xl font-bold mb-2">Proses Agregasi Akhir</h3>
+        <p class="text-sm text-indigo-200">Klik tombol di samping untuk menggabungkan seluruh data responden menggunakan rumus GEOMEAN.</p>
     </div>
-    <a href="aggregate.php" class="relative z-10 mt-6 md:mt-0 bg-white text-indigo-900 px-10 py-4 rounded-2xl font-bold hover:scale-105 transition-transform shadow-xl">
+    <a href="aggregate.php" class="relative z-10 mt-6 md:mt-0 bg-white text-indigo-900 px-6 py-2.5 md:px-10 md:py-4 rounded-2xl font-bold hover:scale-105 transition-transform shadow-xl text-xs md:text-base w-full md:w-auto text-center">
         Proses Agregasi Sekarang <i class="fas fa-sync-alt ml-2"></i>
     </a>
     <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32"></div>
@@ -143,8 +144,8 @@ $criteria = $pdo->query("SELECT * FROM criteria ORDER BY code ASC")->fetchAll();
                 <input type="text" name="name" required placeholder="Contoh: Dr. Budi Santoso" class="w-full px-5 py-4 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none transition">
             </div>
             <div class="flex space-x-3">
-                <button type="submit" class="flex-1 bg-indigo-600 text-white font-bold py-4 rounded-2xl hover:bg-indigo-700 transition">Simpan Data</button>
-                <button type="button" onclick="document.getElementById('addModal').classList.add('hidden')" class="flex-1 bg-gray-100 text-gray-500 font-bold py-4 rounded-2xl hover:bg-gray-200 transition">Batal</button>
+                <button type="submit" class="flex-1 bg-indigo-600 text-white font-bold py-3 md:py-4 rounded-2xl hover:bg-indigo-700 transition text-sm">Simpan Data</button>
+                <button type="button" onclick="document.getElementById('addModal').classList.add('hidden')" class="flex-1 bg-gray-100 text-gray-500 font-bold py-3 md:py-4 rounded-2xl hover:bg-gray-200 transition text-sm">Batal</button>
             </div>
         </form>
     </div>

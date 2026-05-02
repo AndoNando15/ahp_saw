@@ -72,12 +72,12 @@ $stmt = $pdo->prepare("INSERT INTO ahp_results (lambda_max, ci, cr, status) VALU
 $stmt->execute([$lambda_max, $CI, $CR, $status]);
 ?>
 
-<div class="mb-8 flex justify-between items-center">
+<div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
     <div>
-        <h1 class="text-2xl font-bold text-gray-800">Laporan Analisis AHP</h1>
-        <p class="text-gray-500">Hasil perhitungan bobot kriteria melalui 7 tahap ilmiah</p>
+        <h1 class="text-xl md:text-2xl font-bold text-gray-800">Laporan Analisis AHP</h1>
+        <p class="text-sm text-gray-500">Hasil perhitungan bobot kriteria melalui 7 tahap ilmiah</p>
     </div>
-    <div class="bg-indigo-600 text-white px-6 py-2 rounded-xl font-bold flex items-center shadow-lg">
+    <div class="bg-indigo-600 text-white px-5 py-2 rounded-xl font-bold flex items-center shadow-lg text-sm">
         <i class="fas fa-check-circle mr-2"></i> Mode Verifikasi Aktif
     </div>
 </div>
@@ -202,7 +202,7 @@ $stmt->execute([$lambda_max, $CI, $CR, $status]);
                 <p class="text-indigo-200 leading-relaxed mb-8">Bobot prioritas kriteria dari hasil AHP (Multi-Expert) telah disimpan secara otomatis. Anda dapat melanjutkan ke proses perankingan alternatif menggunakan metode SAW sekarang.</p>
             </div>
             <div class="relative z-10 flex space-x-4">
-                <a href="saw.php" class="flex-1 bg-white text-indigo-900 font-bold py-4 rounded-2xl text-center hover:bg-indigo-50 transition shadow-xl">
+                <a href="saw.php" class="flex-1 bg-white text-indigo-900 font-bold py-3 md:py-4 rounded-2xl text-center hover:bg-indigo-50 transition shadow-xl text-sm md:text-base">
                     Lanjut ke SAW <i class="fas fa-arrow-right ml-2"></i>
                 </a>
             </div>

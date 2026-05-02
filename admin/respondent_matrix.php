@@ -48,12 +48,14 @@ foreach ($existing->fetchAll() as $e) {
 }
 ?>
 
-<div class="mb-8 flex justify-between items-center">
+<div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
     <div>
-        <h1 class="text-2xl font-bold text-gray-800">Kuesioner: <?php echo $res_data['name']; ?></h1>
-        <p class="text-gray-500">Pilih skala penilaian untuk setiap pasangan kriteria</p>
+        <h1 class="text-xl md:text-2xl font-bold text-gray-800 tracking-tight">Kuesioner: <?php echo $res_data['name']; ?></h1>
+        <p class="text-sm text-gray-500">Bandingkan kepentingan antar kriteria (Skala Saaty 1-9)</p>
     </div>
-    <a href="respondents.php" class="text-indigo-600 font-bold"><i class="fas fa-arrow-left mr-2"></i> Kembali</a>
+    <a href="respondents.php" class="bg-gray-100 text-gray-600 px-5 py-2.5 rounded-xl font-bold hover:bg-gray-200 transition text-sm flex items-center">
+        <i class="fas fa-arrow-left mr-2"></i> Kembali
+    </a>
 </div>
 
 <div class="space-y-6">
@@ -65,62 +67,98 @@ foreach ($existing->fetchAll() as $e) {
             $c2 = $p[1];
             $current_val = isset($existing_vals[$c1['id'] . '-' . $c2['id']]) ? $existing_vals[$c1['id'] . '-' . $c2['id']] : 1;
         ?>
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-            <div class="grid grid-cols-12 gap-4 items-center">
-                <!-- Kriteria A -->
-                <div class="col-span-3 text-right">
-                    <span class="text-sm font-bold text-gray-700 block uppercase tracking-wider"><?php echo $c1['name']; ?></span>
-                    <span class="text-[10px] text-indigo-500 font-bold"><?php echo $c1['code']; ?></span>
+        <div class="bg-white rounded-3xl shadow-sm border border-gray-100 p-6 md:p-8 overflow-hidden">
+            <!-- Mobile Header Labels -->
+            <div class="flex justify-between md:hidden mb-6">
+                <div class="text-left w-1/2 pr-2">
+                    <span class="text-[10px] font-black text-indigo-500 uppercase tracking-tighter"><?php echo $c1['code']; ?></span>
+                    <h4 class="text-xs font-bold text-gray-800 leading-tight"><?php echo $c1['name']; ?></h4>
+                </div>
+                <div class="text-right w-1/2 pl-2">
+                    <span class="text-[10px] font-black text-indigo-500 uppercase tracking-tighter"><?php echo $c2['code']; ?></span>
+                    <h4 class="text-xs font-bold text-gray-800 leading-tight"><?php echo $c2['name']; ?></h4>
+                </div>
+            </div>
+
+            <div class="flex flex-col md:flex-row md:items-center md:space-x-8">
+                <!-- Desktop Left Label -->
+                <div class="hidden md:block md:w-1/4 text-right">
+                    <span class="text-xs font-black text-indigo-500 uppercase tracking-wider block mb-1"><?php echo $c1['code']; ?></span>
+                    <h4 class="text-sm font-bold text-gray-700 uppercase"><?php echo $c1['name']; ?></h4>
                 </div>
 
-                <!-- Scale -->
-                <div class="col-span-6">
-                    <div class="flex items-center justify-between bg-gray-50 p-3 rounded-xl border border-gray-100">
-                        <!-- Left Side (9-2) -->
-                        <?php for ($v = 9; $v >= 2; $v--): ?>
-                            <label class="flex flex-col items-center cursor-pointer group">
-                                <input type="radio" name="pair[<?php echo $c1['id']; ?>-<?php echo $c2['id']; ?>]" value="<?php echo $v; ?>" 
-                                    <?php echo (abs($current_val - $v) < 0.0001) ? 'checked' : ''; ?>
-                                    class="w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 focus:ring-indigo-500 cursor-pointer">
-                                <span class="text-[10px] mt-1 font-bold text-gray-400 group-hover:text-indigo-600 transition"><?php echo $v; ?></span>
-                            </label>
-                        <?php endfor; ?>
+                <!-- Scale Container -->
+                <div class="md:w-1/2">
+                    <div class="relative py-4">
+                        <!-- Connecting Line -->
+                        <div class="absolute top-1/2 left-0 right-0 h-0.5 bg-gray-100 -translate-y-1/2 z-0"></div>
+                        
+                        <!-- Radio Options (Scrollable on Mobile) -->
+                        <div class="relative z-10 flex items-center justify-between overflow-x-auto pb-4 md:pb-0 custom-scrollbar-mini">
+                            <div class="flex items-center space-x-1 sm:space-x-2 md:space-x-0 md:justify-between w-full min-w-[500px] md:min-w-0">
+                                
+                                <!-- Left 9 to 2 -->
+                                <?php for ($v = 9; $v >= 2; $v--): ?>
+                                    <label class="flex flex-col items-center cursor-pointer group px-1">
+                                        <input type="radio" name="pair[<?php echo $c1['id']; ?>-<?php echo $c2['id']; ?>]" value="<?php echo $v; ?>" 
+                                            <?php echo (abs($current_val - $v) < 0.0001) ? 'checked' : ''; ?>
+                                            class="w-5 h-5 text-indigo-600 border-2 border-gray-200 focus:ring-indigo-500 cursor-pointer">
+                                        <span class="text-[9px] mt-2 font-bold text-gray-400 group-hover:text-indigo-600 transition"><?php echo $v; ?></span>
+                                    </label>
+                                <?php endfor; ?>
 
-                        <!-- Center (1) -->
-                        <label class="flex flex-col items-center cursor-pointer group">
-                            <input type="radio" name="pair[<?php echo $c1['id']; ?>-<?php echo $c2['id']; ?>]" value="1" 
-                                <?php echo (abs($current_val - 1) < 0.0001) ? 'checked' : ''; ?>
-                                class="w-5 h-5 text-indigo-600 bg-gray-100 border-gray-300 focus:ring-indigo-500 cursor-pointer">
-                            <span class="text-[10px] mt-1 font-bold text-indigo-600">1</span>
-                        </label>
+                                <!-- Center 1 -->
+                                <label class="flex flex-col items-center cursor-pointer group px-2">
+                                    <div class="p-1 rounded-full bg-indigo-50 border border-indigo-100 mb-1">
+                                        <input type="radio" name="pair[<?php echo $c1['id']; ?>-<?php echo $c2['id']; ?>]" value="1" 
+                                            <?php echo (abs($current_val - 1) < 0.0001) ? 'checked' : ''; ?>
+                                            class="w-6 h-6 text-indigo-600 border-2 border-indigo-200 focus:ring-indigo-500 cursor-pointer">
+                                    </div>
+                                    <span class="text-[10px] font-black text-indigo-600">1</span>
+                                </label>
 
-                        <!-- Right Side (2-9 reciprocal) -->
-                        <?php for ($v = 2; $v <= 9; $v++): ?>
-                            <label class="flex flex-col items-center cursor-pointer group">
-                                <input type="radio" name="pair[<?php echo $c1['id']; ?>-<?php echo $c2['id']; ?>]" value="<?php echo 1/$v; ?>" 
-                                    <?php echo (abs($current_val - (1/$v)) < 0.0001) ? 'checked' : ''; ?>
-                                    class="w-4 h-4 text-indigo-600 bg-gray-100 border-gray-300 focus:ring-indigo-500 cursor-pointer">
-                                <span class="text-[10px] mt-1 font-bold text-gray-400 group-hover:text-indigo-600 transition"><?php echo $v; ?></span>
-                            </label>
-                        <?php endfor; ?>
+                                <!-- Right 2 to 9 Reciprocal -->
+                                <?php for ($v = 2; $v <= 9; $v++): ?>
+                                    <label class="flex flex-col items-center cursor-pointer group px-1">
+                                        <input type="radio" name="pair[<?php echo $c1['id']; ?>-<?php echo $c2['id']; ?>]" value="<?php echo 1/$v; ?>" 
+                                            <?php echo (abs($current_val - (1/$v)) < 0.0001) ? 'checked' : ''; ?>
+                                            class="w-5 h-5 text-indigo-600 border-2 border-gray-200 focus:ring-indigo-500 cursor-pointer">
+                                        <span class="text-[9px] mt-2 font-bold text-gray-400 group-hover:text-indigo-600 transition"><?php echo $v; ?></span>
+                                    </label>
+                                <?php endfor; ?>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Legend Labels Mobile -->
+                    <div class="flex justify-between mt-1 md:hidden">
+                        <span class="text-[9px] font-bold text-indigo-400 uppercase tracking-widest">← Lebih Penting</span>
+                        <span class="text-[9px] font-bold text-indigo-400 uppercase tracking-widest">Lebih Penting →</span>
                     </div>
                 </div>
 
-                <!-- Kriteria B -->
-                <div class="col-span-3 text-left">
-                    <span class="text-sm font-bold text-gray-700 block uppercase tracking-wider"><?php echo $c2['name']; ?></span>
-                    <span class="text-[10px] text-indigo-500 font-bold"><?php echo $c2['code']; ?></span>
+                <!-- Desktop Right Label -->
+                <div class="hidden md:block md:w-1/4 text-left">
+                    <span class="text-xs font-black text-indigo-500 uppercase tracking-wider block mb-1"><?php echo $c2['code']; ?></span>
+                    <h4 class="text-sm font-bold text-gray-700 uppercase"><?php echo $c2['name']; ?></h4>
                 </div>
             </div>
         </div>
         <?php endforeach; ?>
 
-        <div class="mt-10 flex justify-center pb-12">
-            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 px-20 rounded-2xl shadow-xl transition transform hover:-translate-y-1">
-                Simpan Penilaian Responden
+        <div class="mt-12 flex justify-center pb-20">
+            <button type="submit" class="w-full md:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 md:py-5 px-10 md:px-20 rounded-2xl shadow-2xl transition transform hover:-translate-y-1 text-sm md:text-lg">
+                Simpan Penilaian Pakar
             </button>
         </div>
     </form>
 </div>
+
+<style>
+.custom-scrollbar-mini::-webkit-scrollbar { height: 4px; }
+.custom-scrollbar-mini::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+.custom-scrollbar-mini::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+.custom-scrollbar-mini::-webkit-scrollbar-thumb:hover { background: #cbd5e1; }
+</style>
 
 <?php require_once '../layout/footer.php'; ?>

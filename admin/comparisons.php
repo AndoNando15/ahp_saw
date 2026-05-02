@@ -14,16 +14,16 @@ foreach ($comparisons as $c) {
 }
 ?>
 
-<div class="mb-8 flex justify-between items-end">
+<div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end space-y-4 md:space-y-0">
     <div>
-        <h1 class="text-2xl font-bold text-gray-800">Matriks Perbandingan (Agregasi)</h1>
-        <p class="text-gray-500">Hasil gabungan rata-rata geometrik (GEOMEAN) dari 15 responden</p>
+        <h1 class="text-xl md:text-2xl font-bold text-gray-800">Matriks Perbandingan (Agregasi)</h1>
+        <p class="text-sm text-gray-500">Hasil gabungan rata-rata geometrik (GEOMEAN) dari 15 responden</p>
     </div>
-    <div class="flex space-x-3">
-        <a href="respondents.php" class="bg-gray-100 text-gray-700 px-6 py-2.5 rounded-xl font-bold hover:bg-gray-200 transition">
+    <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 w-full md:w-auto">
+        <a href="respondents.php" class="bg-gray-100 text-gray-700 px-4 py-2.5 rounded-xl font-bold hover:bg-gray-200 transition text-center text-sm">
             <i class="fas fa-users mr-2"></i> Kelola Responden
         </a>
-        <a href="ahp.php" class="bg-indigo-600 text-white px-6 py-2.5 rounded-xl font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200">
+        <a href="ahp.php" class="bg-indigo-600 text-white px-4 py-2.5 rounded-xl font-bold hover:bg-indigo-700 transition shadow-lg shadow-indigo-200 text-center text-sm">
             Lihat Detail Proses AHP <i class="fas fa-arrow-right ml-2"></i>
         </a>
     </div>
