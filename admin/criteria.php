@@ -1,7 +1,5 @@
 <?php
 require_once '../config/connection.php';
-require_once '../layout/header.php';
-require_once '../layout/sidebar.php';
 
 // Handle Update
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
@@ -11,6 +9,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
     exit;
 }
 
+// Include layout after handling POST
+require_once '../layout/header.php';
+require_once '../layout/sidebar.php';
 $criteria = $pdo->query("SELECT * FROM criteria")->fetchAll();
 ?>
 

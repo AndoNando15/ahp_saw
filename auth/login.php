@@ -37,13 +37,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body class="bg-indigo-900 flex items-center justify-center min-h-screen">
     <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md">
         <div class="text-center mb-10">
-            <h1 class="text-3xl font-bold text-indigo-900">AHP-SAW</h1>
-            <p class="text-gray-500 mt-2">Sistem Pendukung Keputusan</p>
+            <h1 class="text-3xl font-bold text-indigo-900">Kombinasi AHP & SAW</h1>
+            <p class="text-gray-500 mt-2">Calon Penerima BPNT Kelurahan Pekelingan</p>
         </div>
         
+        <?php if (isset($_GET['registered']) && $_GET['registered'] == 1): ?>
+            <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded shadow-sm">
+                <p class="text-sm">Registrasi berhasil! Silakan masuk dengan akun Anda.</p>
+            </div>
+        <?php endif; ?>
+
         <?php if ($error): ?>
             <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded shadow-sm">
-                <p class="text-sm">Username atau password salah!</p>
+                <p class="text-sm"><?= htmlspecialchars($error) ?></p>
             </div>
         <?php endif; ?>
 
@@ -76,8 +82,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </button>
         </form>
         
+        <div class="mt-6 text-center text-sm text-gray-600">
+            Belum memiliki akun? <a href="register.php" class="text-indigo-600 hover:text-indigo-800 font-semibold hover:underline transition">Daftar di sini</a>
+        </div>
+
         <div class="mt-8 text-center text-sm text-gray-400">
-            &copy; 2026 AHP-SAW System
+            &copy; 2026 Website Kombinasi AHP dan SAW Calon Penerima BPNT Kelurahan Pekelingan
         </div>
     </div>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">

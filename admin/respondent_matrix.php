@@ -1,7 +1,5 @@
 <?php
 require_once '../config/connection.php';
-require_once '../layout/header.php';
-require_once '../layout/sidebar.php';
 
 $id = $_GET['id'];
 $respondent = $pdo->prepare("SELECT * FROM respondents WHERE id = ?");
@@ -21,7 +19,19 @@ for ($i = 0; $i < count($criteria); $i++) {
     }
 }
 
+// Handle Edit Respondent Name and Role
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['edit_respondent'])) {
+    $newName = $_POST['name'] ?? $res_data['name'];
+    $newRole = $_POST['role'] ?? ($res_data['role'] ?? '');
+    $stmt = $pdo->prepare("UPDATE respondents SET name = ?, role = ? WHERE id = ?");
+    $stmt->execute([$newName, $newRole, $id]);
+    // Refresh data
+    $respondent->execute([$id]);
+    $res_data = $respondent->fetch();
+}
+
 // Handle Save
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['save_matrix'])) {
     $pdo->prepare("DELETE FROM respondent_comparisons WHERE respondent_id = ?")->execute([$id]);
     foreach ($_POST['pair'] as $key => $val) {
@@ -48,9 +58,34 @@ foreach ($existing->fetchAll() as $e) {
 }
 ?>
 
+<?php require_once '../layout/header.php'; ?>
+<?php require_once '../layout/sidebar.php'; ?>
+
 <div class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
     <div>
         <h1 class="text-xl md:text-2xl font-bold text-gray-800 tracking-tight">Kuesioner: <?php echo $res_data['name']; ?></h1>
+        <div class="relative bg-white/90 backdrop-blur-lg my-6 rounded-xl shadow-xl border border-gray-200 p-6 max-w-4xl mx-auto">
+    <h2 class="text-lg font-semibold text-gray-800 mb-4">Edit Responden</h2>
+    <form method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6" id="editForm">
+        <input type="hidden" name="edit_respondent" value="1">
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap Pakar</label>
+            <input type="text" name="name" required value="<?php echo htmlspecialchars($res_data['name']); ?>" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition" />
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">Jabatan</label>
+            <input type="text" name="role" required value="<?php echo htmlspecialchars($res_data['role'] ?? ''); ?>" class="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 transition" />
+        </div>
+        <div class="md:col-span-2 flex items-center space-x-4">
+            <button type="submit" class="flex items-center bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-5 py-2 rounded-xl shadow-md transition transform hover:scale-105">
+                <i class="fas fa-save mr-2"></i> Simpan Perubahan
+            </button>
+            <button type="button" onclick="document.getElementById('editForm').reset();" class="flex items-center bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold px-5 py-2 rounded-xl shadow-md transition transform hover:scale-105">
+                <i class="fas fa-undo mr-2"></i> Reset
+            </button>
+        </div>
+    </form>
+</div>
         <p class="text-sm text-gray-500">Bandingkan kepentingan antar kriteria (Skala Saaty 1-9)</p>
     </div>
     <a href="respondents.php" class="bg-gray-100 text-gray-600 px-5 py-2.5 rounded-xl font-bold hover:bg-gray-200 transition text-sm flex items-center">

@@ -55,7 +55,7 @@ $latestResult = $pdo->query("SELECT * FROM ahp_results ORDER BY id DESC LIMIT 1"
 </div>
 
 <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-    <h3 class="text-lg font-bold text-gray-800 mb-4">Selamat Datang di SPK AHP-SAW</h3>
+    <h3 class="text-lg font-bold text-gray-800 mb-4">Website Kombinasi AHP dan SAW Calon Penerima BPNT Kelurahan Pekelingan</h3>
     <p class="text-gray-600 leading-relaxed">
         Sistem ini membantu Anda mengambil keputusan menggunakan metode AHP dan SAW. 
         Mulailah dengan mengelola **Kriteria**, kemudian input data **Alternatif**, lakukan **Perbandingan Berpasangan**, dan terakhir lihat **Ranking SAW** untuk melihat hasil akhir.
