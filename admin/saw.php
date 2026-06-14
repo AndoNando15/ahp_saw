@@ -135,18 +135,13 @@ foreach ($alternatives as $alt) {
         'nik' => $alt['nik'],
         'score' => $score,
         'raw' => $matrix[$alt['id']],
-        'norm' => $normalized[$alt['id']],
-        'before' => [
-            'C1' => $alt['income'],
-            'C2' => $alt['age'],
-            'C3' => $alt['target_category'],
-            'C4' => $alt['occupation']
-        ]
+        'norm' => $normalized[$alt['id']]
     ];
 }
 
 usort($results, function ($a, $b) {
-    return $b['score'] <=> $a['score']; });
+    return $b['score'] <=> $a['score'];
+});
 ?>
 
 <div
@@ -162,6 +157,147 @@ usort($results, function ($a, $b) {
 </div>
 
 <div class="space-y-8 pb-20">
+    <!-- 0. BOBOT KRITERIA SUMMARY -->
+    <div class="bg-indigo-900 rounded-[2rem] p-6 md:p-8 text-white shadow-xl">
+        <h3 class="text-sm md:text-base font-bold mb-6 flex items-center opacity-80">
+            <i class="fas fa-weight-hanging mr-3"></i> Bobot Prioritas Kriteria (Hasil AHP)
+        </h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <?php foreach ($weights_data as $w): ?>
+                <div class="bg-white/10 p-4 rounded-2xl border border-white/5">
+                    <span class="text-[10px] font-black uppercase opacity-60 block mb-1"><?php echo $w['code']; ?> -
+                        <?php echo $w['name']; ?></span>
+                    <span
+                        class="text-xl md:text-2xl font-mono font-black"><?php echo number_format($w['weight'] * 100, 1); ?>%</span>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <!-- TABEL KONVERSI SKALA & BOBOT (compact, auto-width) -->
+    <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-4 md:p-6 overflow-x-auto text-sm">
+        <h3 class="text-sm font-bold text-gray-800 mb-3 flex items-center">
+            <span
+                class="w-7 h-7 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center mr-3 text-xs font-black">0</span>
+            Tabel Skala & Bobot (Konversi)
+            <span class="ml-3 text-xs text-gray-500">(Referensi mapping nilai)</span>
+        </h3>
+        <div class="overflow-x-auto">
+            <table class="w-auto mx-auto text-sm table-auto border-collapse">
+                <thead class="bg-gray-50/50 text-[12px]">
+                    <tr>
+                        <th class="px-2 py-1 font-black text-gray-400 uppercase tracking-widest">KRITERIA</th>
+                        <th class="px-2 py-1 font-black text-gray-400 uppercase tracking-widest">SKALA</th>
+                        <th class="px-2 py-1 font-black text-gray-400 uppercase tracking-widest text-right">BOBOT</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    <tr class="bg-gray-50">
+                        <td class="px-2 py-1 font-bold">PENGHASILAN</td>
+                        <td class="px-2 py-1">tidak ada</td>
+                        <td class="px-2 py-1 text-right"><span
+                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700">5</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-2 py-1"></td>
+                        <td class="px-2 py-1">1 juta</td>
+                        <td class="px-2 py-1 text-right"><span
+                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700">4</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-2 py-1"></td>
+                        <td class="px-2 py-1">2 juta</td>
+                        <td class="px-2 py-1 text-right"><span
+                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">3</span>
+                        </td>
+                    </tr>
+
+                    <tr class="bg-gray-50">
+                        <td class="px-2 py-1 font-bold">USIA</td>
+                        <td class="px-2 py-1">51 s.d 70+ th</td>
+                        <td class="px-2 py-1 text-right"><span
+                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700">5</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-2 py-1"></td>
+                        <td class="px-2 py-1">46 s.d 50 th</td>
+                        <td class="px-2 py-1 text-right"><span
+                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700">4</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-2 py-1"></td>
+                        <td class="px-2 py-1">41 s.d 45 th</td>
+                        <td class="px-2 py-1 text-right"><span
+                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">3</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-2 py-1"></td>
+                        <td class="px-2 py-1">36 s.d 40 th</td>
+                        <td class="px-2 py-1 text-right"><span
+                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700">2</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-2 py-1"></td>
+                        <td class="px-2 py-1">31 s.d 35 th</td>
+                        <td class="px-2 py-1 text-right"><span
+                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-700">1</span>
+                        </td>
+                    </tr>
+
+                    <tr class="bg-gray-50">
+                        <td class="px-2 py-1 font-bold">KATEGORI SASARAN</td>
+                        <td class="px-2 py-1">LANSIA</td>
+                        <td class="px-2 py-1 text-right"><span
+                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700">5</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-2 py-1"></td>
+                        <td class="px-2 py-1">MISKIN EKTRIM</td>
+                        <td class="px-2 py-1 text-right"><span
+                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700">4</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-2 py-1"></td>
+                        <td class="px-2 py-1">JANDA</td>
+                        <td class="px-2 py-1 text-right"><span
+                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">3</span>
+                        </td>
+                    </tr>
+
+                    <tr class="bg-gray-50">
+                        <td class="px-2 py-1 font-bold">PEKERJAAN</td>
+                        <td class="px-2 py-1">MENGURUS RUMAH TANGGA</td>
+                        <td class="px-2 py-1 text-right"><span
+                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700">5</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-2 py-1"></td>
+                        <td class="px-2 py-1">WIRASWASTA</td>
+                        <td class="px-2 py-1 text-right"><span
+                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700">4</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="px-2 py-1"></td>
+                        <td class="px-2 py-1">PEKERJA SWASTA</td>
+                        <td class="px-2 py-1 text-right"><span
+                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">3</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <!-- 1. SKALA -->
     <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-6 md:p-8 overflow-x-auto">
         <h3 class="text-lg font-bold text-gray-800 mb-6 flex items-center">
@@ -175,7 +311,8 @@ usort($results, function ($a, $b) {
                     <th class="p-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Alternatif</th>
                     <?php foreach ($weights_data as $w): ?>
                         <th class="p-4 text-center text-[10px] font-black text-gray-400 uppercase tracking-widest">
-                            <?php echo $w['code']; ?></th>
+                            <?php echo $w['code']; ?>
+                        </th>
                     <?php endforeach; ?>
                 </tr>
             </thead>
@@ -183,29 +320,14 @@ usort($results, function ($a, $b) {
                 <?php foreach ($results as $res): ?>
                     <tr>
                         <td class="p-4 font-bold text-gray-800 text-sm"><?php echo $res['name']; ?></td>
-                        <?php foreach (['C1', 'C2', 'C3', 'C4'] as $c):
-                            $before = $res['before'][$c];
-                            $after = $res['raw'][$c];
-                            if ($c == 'C1') {
-                                $before_fmt = 'Rp ' . number_format($before, 0, ',', '.');
-                            } else {
-                                $before_fmt = htmlspecialchars($before);
-                            }
-                            ?>
-                            <td class="p-4 text-center font-mono text-sm"><?php echo $before_fmt; ?> &rarr;
-                                <?php echo $after; ?></td>
+                        <?php foreach (['C1', 'C2', 'C3', 'C4'] as $c): ?>
+                            <td class="p-4 text-center font-mono text-sm"><?php echo $res['raw'][$c]; ?></td>
                         <?php endforeach; ?>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
-
-
-
-
-
-
 
     <!-- 2. NORMALISASI -->
     <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-6 md:p-8 overflow-x-auto">
@@ -220,7 +342,8 @@ usort($results, function ($a, $b) {
                     <th class="p-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Alternatif</th>
                     <?php foreach (['C1', 'C2', 'C3', 'C4'] as $c): ?>
                         <th class="p-4 text-center text-[10px] font-black text-indigo-600 uppercase tracking-widest">
-                            <?php echo $c; ?></th>
+                            <?php echo $c; ?>
+                        </th>
                     <?php endforeach; ?>
                 </tr>
             </thead>
@@ -230,29 +353,13 @@ usort($results, function ($a, $b) {
                         <td class="p-4 font-bold text-gray-700 text-sm"><?php echo $res['name']; ?></td>
                         <?php foreach (['C1', 'C2', 'C3', 'C4'] as $c): ?>
                             <td class="p-4 text-center font-mono text-sm text-gray-500">
-                                <?php echo number_format($res['norm'][$c], 4); ?></td>
+                                <?php echo number_format($res['norm'][$c], 4); ?>
+                            </td>
                         <?php endforeach; ?>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
         </table>
-    </div>
-
-    <!-- 0. BOBOT KRITERIA SUMMARY (Moved: after Normalisasi) -->
-    <div class="bg-indigo-900 rounded-[2rem] p-6 md:p-8 text-white shadow-xl mt-6">
-        <h3 class="text-sm md:text-base font-bold mb-6 flex items-center opacity-80">
-            <i class="fas fa-weight-hanging mr-3"></i> Bobot Prioritas Kriteria (Hasil AHP)
-        </h3>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <?php foreach ($weights_data as $w): ?>
-                <div class="bg-white/10 p-4 rounded-2xl border border-white/5">
-                    <span class="text-[10px] font-black uppercase opacity-60 block mb-1"><?php echo $w['code']; ?> -
-                        <?php echo $w['name']; ?></span>
-                    <span
-                        class="text-xl md:text-2xl font-mono font-black"><?php echo number_format($w['weight'] * 100, 1); ?>%</span>
-                </div>
-            <?php endforeach; ?>
-        </div>
     </div>
 
     <!-- 3. RANKING -->
@@ -291,7 +398,8 @@ usort($results, function ($a, $b) {
                             <?php else: ?>
                                 <div
                                     class="w-9 h-9 rounded-xl bg-gray-50 text-gray-400 flex items-center justify-center font-bold border border-gray-100 text-xs">
-                                    <?php echo $idx + 1; ?></div>
+                                    <?php echo $idx + 1; ?>
+                                </div>
                             <?php endif; ?>
                         </td>
                         <td class="p-5 font-bold text-gray-800"><?php echo $res['name']; ?></td>
