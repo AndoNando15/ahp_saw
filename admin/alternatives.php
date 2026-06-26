@@ -124,6 +124,9 @@ require_once '../layout/sidebar.php';
                 class="bg-green-600 text-white px-4 py-2 rounded-lg text-[10px] font-bold hover:bg-green-700 transition flex-shrink-0">
                 IMPORT
             </button>
+            <a href="files/dataset.xlsx" class="ml-2 inline-block bg-blue-600 text-white px-4 py-2 rounded-lg text-[10px] font-bold hover:bg-blue-700 transition">
+                Download Template
+            </a>
         </form>
     </div>
 </div>
