@@ -147,8 +147,8 @@ require_once '../layout/sidebar.php';
                 </th>
                 <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">Age
                 </th>
-                <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Pekerjaan</th>
                 <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Kategori</th>
+                <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Pekerjaan</th>
                 <th class="px-6 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest text-center">Aksi
                 </th>
             </tr>
@@ -172,7 +172,6 @@ require_once '../layout/sidebar.php';
                             class="px-2 py-1 bg-gray-100 rounded-lg text-[10px] font-bold text-gray-600"><?php echo $alt['age']; ?>
                             Thn</span>
                     </td>
-                    <td class="px-6 py-4 text-xs text-gray-600"><?php echo $alt['occupation']; ?></td>
                     <td class="px-6 py-4">
                         <span class="px-3 py-1 <?php
                         if ($alt['target_category'] == 'LANSIA')
@@ -185,6 +184,7 @@ require_once '../layout/sidebar.php';
                             <?php echo $alt['target_category']; ?>
                         </span>
                     </td>
+                    <td class="px-6 py-4 text-xs text-gray-600"><?php echo $alt['occupation']; ?></td>
                     <td class="px-6 py-4 text-center">
                         <div class="flex justify-center space-x-2">
                             <a href="?edit=<?php echo $alt['id']; ?>"

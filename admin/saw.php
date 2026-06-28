@@ -175,128 +175,192 @@ usort($results, function ($a, $b) {
     </div>
 
     <!-- TABEL KONVERSI SKALA & BOBOT (compact, auto-width) -->
-    <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-4 md:p-6 overflow-x-auto text-sm">
-        <h3 class="text-sm font-bold text-gray-800 mb-3 flex items-center">
-            <span
-                class="w-7 h-7 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center mr-3 text-xs font-black">0</span>
-            Tabel Skala & Bobot (Konversi)
-            <span class="ml-3 text-xs text-gray-500">(Referensi mapping nilai)</span>
-        </h3>
-        <div class="overflow-x-auto">
-            <table class="w-auto mx-auto text-sm table-auto border-collapse">
-                <thead class="bg-gray-50/50 text-[12px]">
-                    <tr>
-                        <th class="px-2 py-1 font-black text-gray-400 uppercase tracking-widest">KRITERIA</th>
-                        <th class="px-2 py-1 font-black text-gray-400 uppercase tracking-widest">SKALA</th>
-                        <th class="px-2 py-1 font-black text-gray-400 uppercase tracking-widest text-right">BOBOT</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-100">
-                    <tr class="bg-gray-50">
-                        <td class="px-2 py-1 font-bold">PENGHASILAN</td>
-                        <td class="px-2 py-1">tidak ada</td>
-                        <td class="px-2 py-1 text-right"><span
-                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700">5</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-2 py-1"></td>
-                        <td class="px-2 py-1">1 juta</td>
-                        <td class="px-2 py-1 text-right"><span
-                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700">4</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-2 py-1"></td>
-                        <td class="px-2 py-1">2 juta</td>
-                        <td class="px-2 py-1 text-right"><span
-                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">3</span>
-                        </td>
-                    </tr>
+<!-- Button Fixed Kanan Atas -->
+<button
+    type="button"
+    onclick="openSkalaModal()"
+    class="fixed top-10 right-5 z-50 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-indigo-600 text-white text-sm font-bold shadow-lg hover:bg-indigo-700 transition">
+    <span class="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center text-xs">0</span>
+    Skala & Bobot
+</button>
 
-                    <tr class="bg-gray-50">
-                        <td class="px-2 py-1 font-bold">USIA</td>
-                        <td class="px-2 py-1">51 s.d 70+ th</td>
-                        <td class="px-2 py-1 text-right"><span
-                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700">5</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-2 py-1"></td>
-                        <td class="px-2 py-1">46 s.d 50 th</td>
-                        <td class="px-2 py-1 text-right"><span
-                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700">4</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-2 py-1"></td>
-                        <td class="px-2 py-1">41 s.d 45 th</td>
-                        <td class="px-2 py-1 text-right"><span
-                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">3</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-2 py-1"></td>
-                        <td class="px-2 py-1">36 s.d 40 th</td>
-                        <td class="px-2 py-1 text-right"><span
-                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700">2</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-2 py-1"></td>
-                        <td class="px-2 py-1">31 s.d 35 th</td>
-                        <td class="px-2 py-1 text-right"><span
-                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-700">1</span>
-                        </td>
-                    </tr>
+<!-- Modal Overlay -->
+<div
+    id="skalaModal"
+    class="fixed inset-0 z-[999] hidden items-center justify-center bg-black/50 backdrop-blur-sm px-4">
 
-                    <tr class="bg-gray-50">
-                        <td class="px-2 py-1 font-bold">KATEGORI SASARAN</td>
-                        <td class="px-2 py-1">LANSIA</td>
-                        <td class="px-2 py-1 text-right"><span
-                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700">5</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-2 py-1"></td>
-                        <td class="px-2 py-1">MISKIN EKTRIM</td>
-                        <td class="px-2 py-1 text-right"><span
-                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700">4</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-2 py-1"></td>
-                        <td class="px-2 py-1">JANDA</td>
-                        <td class="px-2 py-1 text-right"><span
-                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">3</span>
-                        </td>
-                    </tr>
+    <!-- Modal Box -->
+    <div class="relative w-full max-w-3xl max-h-[85vh] overflow-hidden bg-white rounded-[2rem] shadow-xl border border-gray-100">
 
-                    <tr class="bg-gray-50">
-                        <td class="px-2 py-1 font-bold">PEKERJAAN</td>
-                        <td class="px-2 py-1">MENGURUS RUMAH TANGGA</td>
-                        <td class="px-2 py-1 text-right"><span
-                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700">5</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-2 py-1"></td>
-                        <td class="px-2 py-1">WIRASWASTA</td>
-                        <td class="px-2 py-1 text-right"><span
-                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700">4</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="px-2 py-1"></td>
-                        <td class="px-2 py-1">PEKERJA SWASTA</td>
-                        <td class="px-2 py-1 text-right"><span
-                                class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">3</span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- Header Modal -->
+        <div class="sticky top-0 z-10 bg-white border-b border-gray-100 px-5 py-4 flex items-center justify-between">
+            <h3 class="text-sm font-bold text-gray-800 flex items-center">
+                <span
+                    class="w-7 h-7 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center mr-3 text-xs font-black">
+                    0
+                </span>
+                Tabel Skala & Bobot (Konversi)
+                <span class="ml-3 text-xs text-gray-500">(Referensi mapping nilai)</span>
+            </h3>
+
+            <button
+                type="button"
+                onclick="closeSkalaModal()"
+                class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center font-bold transition">
+                ×
+            </button>
+        </div>
+
+        <!-- Content Modal -->
+        <div class="p-4 md:p-6 overflow-x-auto overflow-y-auto max-h-[70vh] text-sm">
+            <div class="overflow-x-auto">
+                <table class="w-auto mx-auto text-sm table-auto border-collapse">
+                    <thead class="bg-gray-50/50 text-[12px]">
+                        <tr>
+                            <th class="px-2 py-1 font-black text-gray-400 uppercase tracking-widest">KRITERIA</th>
+                            <th class="px-2 py-1 font-black text-gray-400 uppercase tracking-widest">SKALA</th>
+                            <th class="px-2 py-1 font-black text-gray-400 uppercase tracking-widest text-right">BOBOT</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="divide-y divide-gray-100">
+                        <tr class="bg-gray-50">
+                            <td class="px-2 py-1 font-bold">PENGHASILAN</td>
+                            <td class="px-2 py-1">tidak ada</td>
+                            <td class="px-2 py-1 text-right">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700">5</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-2 py-1"></td>
+                            <td class="px-2 py-1">1 juta</td>
+                            <td class="px-2 py-1 text-right">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700">4</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-2 py-1"></td>
+                            <td class="px-2 py-1">2 juta</td>
+                            <td class="px-2 py-1 text-right">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">3</span>
+                            </td>
+                        </tr>
+
+                        <tr class="bg-gray-50">
+                            <td class="px-2 py-1 font-bold">USIA</td>
+                            <td class="px-2 py-1">51 s.d 70+ th</td>
+                            <td class="px-2 py-1 text-right">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700">5</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-2 py-1"></td>
+                            <td class="px-2 py-1">46 s.d 50 th</td>
+                            <td class="px-2 py-1 text-right">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700">4</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-2 py-1"></td>
+                            <td class="px-2 py-1">41 s.d 45 th</td>
+                            <td class="px-2 py-1 text-right">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">3</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-2 py-1"></td>
+                            <td class="px-2 py-1">36 s.d 40 th</td>
+                            <td class="px-2 py-1 text-right">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700">2</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-2 py-1"></td>
+                            <td class="px-2 py-1">31 s.d 35 th</td>
+                            <td class="px-2 py-1 text-right">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-gray-100 text-gray-700">1</span>
+                            </td>
+                        </tr>
+
+                        <tr class="bg-gray-50">
+                            <td class="px-2 py-1 font-bold">KATEGORI SASARAN</td>
+                            <td class="px-2 py-1">LANSIA</td>
+                            <td class="px-2 py-1 text-right">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700">5</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-2 py-1"></td>
+                            <td class="px-2 py-1">MISKIN EKTRIM</td>
+                            <td class="px-2 py-1 text-right">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700">4</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-2 py-1"></td>
+                            <td class="px-2 py-1">JANDA</td>
+                            <td class="px-2 py-1 text-right">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">3</span>
+                            </td>
+                        </tr>
+
+                        <tr class="bg-gray-50">
+                            <td class="px-2 py-1 font-bold">PEKERJAAN</td>
+                            <td class="px-2 py-1">MENGURUS RUMAH TANGGA</td>
+                            <td class="px-2 py-1 text-right">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700">5</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-2 py-1"></td>
+                            <td class="px-2 py-1">WIRASWASTA</td>
+                            <td class="px-2 py-1 text-right">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700">4</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-2 py-1"></td>
+                            <td class="px-2 py-1">PEKERJA SWASTA</td>
+                            <td class="px-2 py-1 text-right">
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-indigo-100 text-indigo-700">3</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+</div>
+
+<script>
+    const skalaModal = document.getElementById('skalaModal');
+
+    function openSkalaModal() {
+        skalaModal.classList.remove('hidden');
+        skalaModal.classList.add('flex');
+        document.body.classList.add('overflow-hidden');
+    }
+
+    function closeSkalaModal() {
+        skalaModal.classList.add('hidden');
+        skalaModal.classList.remove('flex');
+        document.body.classList.remove('overflow-hidden');
+    }
+
+    // Tutup modal ketika klik area gelap luar modal
+    skalaModal.addEventListener('click', function (e) {
+        if (e.target === skalaModal) {
+            closeSkalaModal();
+        }
+    });
+
+    // Tutup modal dengan tombol ESC
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+            closeSkalaModal();
+        }
+    });
+</script>
 
     <!-- 1. SKALA -->
     <div class="bg-white rounded-[2rem] shadow-sm border border-gray-100 p-6 md:p-8 overflow-x-auto">
@@ -443,7 +507,6 @@ usort($results, function ($a, $b) {
             padding: 0 !important;
         }
 
-        .rounded-[2rem],
         .rounded-3xl {
             border-radius: 0.5rem !important;
         }

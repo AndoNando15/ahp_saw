@@ -54,7 +54,7 @@ $latestResult = $pdo->query("SELECT * FROM ahp_results ORDER BY id DESC LIMIT 1"
     </div>
 </div>
 
-<div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+<!-- <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
     <h3 class="text-lg font-bold text-gray-800 mb-4">Website Kombinasi AHP dan SAW Calon Penerima BPNT Kelurahan Pekelingan</h3>
     <p class="text-gray-600 leading-relaxed">
         Sistem ini membantu Anda mengambil keputusan menggunakan metode AHP dan SAW. 
@@ -64,6 +64,6 @@ $latestResult = $pdo->query("SELECT * FROM ahp_results ORDER BY id DESC LIMIT 1"
         <a href="criteria.php" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg transition">Kelola Kriteria</a>
         <a href="saw.php" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-6 py-2 rounded-lg transition">Lihat Ranking</a>
     </div>
-</div>
+</div> -->
 
 <?php require_once '../layout/footer.php'; ?>
