@@ -168,7 +168,7 @@ usort($results, function ($a, $b) {
                     <span class="text-[10px] font-black uppercase opacity-60 block mb-1"><?php echo $w['code']; ?> -
                         <?php echo $w['name']; ?></span>
                     <span
-                        class="text-xl md:text-2xl font-mono font-black"><?php echo number_format($w['weight'] * 100, 1); ?>%</span>
+                        class="text-xl md:text-2xl font-mono font-black"><?php echo number_format($w['weight'], 4); ?></span>
                 </div>
             <?php endforeach; ?>
         </div>
