@@ -3,7 +3,7 @@
 <aside id="sidebar"
     class="w-full md:w-64 bg-indigo-900 text-white flex-shrink-0 shadow-xl fixed md:sticky md:top-0 z-50 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out h-full md:h-screen overflow-y-auto">
     <div class="p-6 flex items-center justify-center shrink-0 ">
-        <h1 class="text-xl font-bold tracking-wider ">AHAS</h1>
+        <h1 class="text-xl font-bold tracking-wider italic ">SI-AHAS</h1>
         <button class="md:hidden text-white focus:outline-none" id="close-menu-button">
             <i class="fas fa-times text-xl"></i>
         </button>

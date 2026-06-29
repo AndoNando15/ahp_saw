@@ -245,16 +245,15 @@ $stmt->execute([$lambda_max, $CI, $CR, $status]);
             </div>
         </div>
 
-        <div class="lg:col-span-2 bg-indigo-900 rounded-[2rem] p-10 text-white relative overflow-hidden flex flex-col justify-between h-full shadow-2xl">
+        <div class="lg:col-span-2 bg-indigo-900 rounded-[2rem] p-10 text-white relative overflow-hidden flex flex-col justify-between shadow-2xl">
             <div class="relative z-10">
                 <h3 class="text-2xl font-bold mb-4">Bobot Kriteria Berhasil Ditetapkan!</h3>
-                <p class="text-indigo-200 leading-relaxed mb-8">Bobot prioritas kriteria dari hasil AHP (Multi-Expert) telah disimpan secara otomatis. Anda dapat melanjutkan ke proses perankingan alternatif menggunakan metode SAW sekarang.</p>
-            </div>
-            <div class="relative z-10 flex space-x-4">
-                <a href="saw.php" class="flex-1 bg-white text-indigo-900 font-bold py-3 md:py-4 rounded-2xl text-center hover:bg-indigo-50 transition shadow-xl text-sm md:text-base">
+                    <a href="saw.php" class="flex-1 bg-white px-5 text-indigo-900 font-bold md:py-4 rounded-2xl text-center hover:bg-indigo-50 transition shadow-xl text-sm md:text-base">
                     Lanjut ke SAW <i class="fas fa-arrow-right ml-2"></i>
                 </a>
+                <!-- <p class="text-indigo-200 leading-relaxed mb-8">Bobot prioritas kriteria dari hasil AHP (Multi-Expert) telah disimpan secara otomatis. Anda dapat melanjutkan ke proses perankingan alternatif menggunakan metode SAW sekarang.</p> -->
             </div>
+           
             <div class="absolute bottom-0 right-0 w-80 h-80 bg-white/5 rounded-full -mr-20 -mb-20"></div>
         </div>
     </div>
