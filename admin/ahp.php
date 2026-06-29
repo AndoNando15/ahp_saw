@@ -21,14 +21,49 @@ foreach ($criteria as $c1) {
     }
 }
 
-// STEP 2: Jumlah tiap kolom
-$col_totals = [];
-foreach ($criteria as $c2) {
-    $sum = 0;
-    foreach ($criteria as $c1) {
-        $sum += $matrix[$c1['id']][$c2['id']];
+// Calculate row totals for original matrix
+$row_totals = [];
+foreach ($criteria as $c1) {
+    $row_sum = 0;
+    foreach ($criteria as $c2) {
+        $row_sum += $matrix[$c1['id']][$c2['id']];
     }
-    $col_totals[$c2['id']] = $sum;
+    $row_totals[$c1['id']] = $row_sum;
+}
+
+// STEP 2: Jumlah tiap kolom (menggunakan Geomean dari sum masing-masing responden)
+$col_totals = [];
+$respondents = $pdo->query("SELECT id FROM respondents")->fetchAll(PDO::FETCH_COLUMN);
+$num_resp = count($respondents);
+
+if ($num_resp > 0) {
+    foreach ($criteria as $c2) {
+        $product = 1;
+        foreach ($respondents as $resp_id) {
+            $sum = 0;
+            foreach ($criteria as $c1) {
+                if ($c1['id'] == $c2['id']) {
+                    $val = 1;
+                } else {
+                    $stmt = $pdo->prepare("SELECT value FROM respondent_comparisons WHERE respondent_id = ? AND criteria_1 = ? AND criteria_2 = ?");
+                    $stmt->execute([$resp_id, $c1['id'], $c2['id']]);
+                    $val = $stmt->fetchColumn() ?: 1;
+                }
+                $sum += $val;
+            }
+            $product *= $sum;
+        }
+        $col_totals[$c2['id']] = pow($product, 1 / $num_resp);
+    }
+} else {
+    // Fallback if no respondents
+    foreach ($criteria as $c2) {
+        $sum = 0;
+        foreach ($criteria as $c1) {
+            $sum += $matrix[$c1['id']][$c2['id']];
+        }
+        $col_totals[$c2['id']] = $sum;
+    }
 }
 
 // STEP 3: Normalisasi matriks
@@ -41,11 +76,13 @@ foreach ($criteria as $c1) {
 
 // STEP 4: Hitung bobot prioritas
 $weights = [];
+$norm_row_sums = [];
 foreach ($criteria as $c1) {
     $row_sum = 0;
     foreach ($criteria as $c2) {
         $row_sum += $norm_matrix[$c1['id']][$c2['id']];
     }
+    $norm_row_sums[$c1['id']] = $row_sum;
     $weight = $row_sum / $n;
     $weights[$c1['id']] = $weight;
     
@@ -102,6 +139,7 @@ $stmt->execute([$lambda_max, $CI, $CR, $status]);
                             <?php foreach ($criteria as $c): ?>
                                 <th class="p-4 text-center text-indigo-600 font-bold border-b border-gray-100"><?php echo $c['code']; ?></th>
                             <?php endforeach; ?>
+                            <th class="p-4 text-center text-indigo-700 font-black uppercase text-[10px] tracking-widest">Total Baris</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -113,19 +151,26 @@ $stmt->execute([$lambda_max, $CI, $CR, $status]);
                                         <?php echo number_format($matrix[$c1['id']][$c2['id']], 4); ?>
                                     </td>
                                 <?php endforeach; ?>
+                                <td class="p-4 text-center font-mono font-bold text-indigo-700 bg-indigo-100 border-b border-gray-50">
+                                    <?php echo number_format($row_totals[$c1['id']], 4); ?>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
-                    <tfoot>
-                        <tr class="bg-indigo-50/30">
-                            <th class="p-4 text-indigo-700 font-black uppercase text-[10px] tracking-widest">Total Kolom</th>
-                            <?php foreach ($criteria as $c): ?>
-                                <td class="p-4 text-center text-indigo-700 font-mono font-bold">
-                                    <?php echo number_format($col_totals[$c['id']], 4); ?>
-                                </td>
-                            <?php endforeach; ?>
-                        </tr>
-                    </tfoot>
+<tfoot>
+<tr class="bg-indigo-50/30">
+<th class="p-4 text-indigo-700 font-black uppercase text-[10px] tracking-widest">Jumlah (Geomean)</th>
+<?php foreach ($criteria as $c): ?>
+<td class="p-4 text-center text-indigo-700 font-mono font-bold">
+<?php echo number_format($col_totals[$c['id']], 4); ?>
+</td>
+<?php endforeach; ?>
+<td class="p-4 text-center text-indigo-700 font-mono font-bold bg-indigo-100">
+<?php echo number_format(array_sum($row_totals), 4); ?>
+</td>
+</tr>
+</tfoot>
+                   
                 </table>
             </div>
         </div>
@@ -147,6 +192,7 @@ $stmt->execute([$lambda_max, $CI, $CR, $status]);
                             <?php foreach ($criteria as $c): ?>
                                 <th class="p-4 text-center text-indigo-600 font-bold border-b border-gray-100"><?php echo $c['code']; ?></th>
                             <?php endforeach; ?>
+                            <th class="p-4 text-center bg-indigo-100 text-indigo-800 font-bold">JUMLAH</th>
                             <th class="p-4 text-center bg-indigo-600 text-white font-bold rounded-t-xl">BOBOT</th>
                         </tr>
                     </thead>
@@ -159,6 +205,9 @@ $stmt->execute([$lambda_max, $CI, $CR, $status]);
                                         <?php echo number_format($norm_matrix[$c1['id']][$c2['id']], 4); ?>
                                     </td>
                                 <?php endforeach; ?>
+                                <td class="p-4 text-center font-mono font-bold text-indigo-700 bg-indigo-50 border-b border-indigo-100">
+                                    <?php echo number_format($norm_row_sums[$c1['id']], 4); ?>
+                                </td>
                                 <td class="p-4 text-center font-mono font-bold text-white bg-indigo-500 border-b border-indigo-400">
                                     <?php echo number_format($weights[$c1['id']], 4); ?>
                                 </td>
